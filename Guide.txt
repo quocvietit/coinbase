@@ -1,0 +1,6 @@
+## Manual Deploy - Unbuntu
+$ lsof -i:8000 (Find port)
+$ kill -9 [PID] (kill port)
+$ gunicorn -b 0.0.0.0:8000 Application:app
+
+

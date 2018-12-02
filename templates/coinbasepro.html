@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
+
+    <!-- Morris Charts JavaScript -->
+    <script src='{{ url_for("static", filename="js/get-price.js") }}'></script>
+    <!-- style -->
+    <style>
+         .box{
+          float: left;
+          width:30%;
+          border-right: 1px solid #333;
+          text-align: center;
+          border-bottom: 1px solid #333;
+          padding: 5px 0px;
+         }
+         h5{
+          margin: 0px;
+          padding: 0px;
+         }
+         table, th, td {
+           border: 1px solid black;
+         }
+
+
+    </style>
+</head>
+<body>
+<div class="box">
+    <h5>BTC-GBP</h5>
+    <p>Bid: <span id="BTC_GBP_bid" class="BTC_GBP_bid"></span><br/>
+        Ask: <span id="BTC_GBP_ask" class="BTC_GBP_ask"></span><br/>
+    </p>
+
+    <h5>ETH-GBP</h5>
+    <p>Bid: <span id="ETH_GBP_bid" class="ETH_GBP_bid"></span><br/>
+        Ask: <span id="ETH_GBP_ask" class="ETH_GBP_ask"></span><br/>
+    </p>
+
+    <h5>ETH-BTC</h5>
+    <p>Bid: <span id="ETH_BTC_bid" class="ETH_BTC_bid"></span><br/>
+        Ask: <span id="ETH_BTC_ask" class="ETH_BTC_ask"></span><br/>
+    </p>
+    <h5>Profit Rate1 : <span id="profit_rate1"></span></h5>
+    <h5>Profit Rate2 : <span id="profit_rate2"></span></h5>
+
+    <input type='button' onclick='order1()' value='Button 1 Bid/Ask Price'>
+    <div id="result1"></div>
+    <input type='submit' onclick='order2()' value='Button 2 Bid/Ask Price'>
+    <div id="result2"></div>
+
+</div>
+</body>
+<script type=text/javascript>
+     function order1() {
+            data = {
+                 BTC_GBP_bid: $(".BTC_GBP_bid").text(),
+                 ETH_BTC_bid: $(".ETH_BTC_bid").text(),
+                 ETH_GBP_ask: $(".ETH_GBP_ask").text()
+            };
+            $.post('/coinbasepro/order1',data)
+                .done(function(response) {
+                 $('#result1').html(response)
+            }).fail(function() {
+                 $('#result1').text("Error");
+            });
+        }
+
+    function order2() {
+            data = {
+                 ETH_GBP_bid: $(".ETH_GBP_bid").text(),
+                 ETH_BTC_ask: $(".ETH_BTC_ask").text(),
+                 BTC_GBP_ask: $(".BTC_GBP_ask").text()
+            };
+            $.post('/coinbasepro/order2',data)
+                .done(function(response) {
+                 $('#result2').html(response)
+            }).fail(function() {
+                 $('#result2').text("Error");
+            });
+        }
+</script>
+</html>

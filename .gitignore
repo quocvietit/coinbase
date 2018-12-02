@@ -1,0 +1,9 @@
+.idea
+.settings
+target
+bin
+*.classpath
+*.project
+*.log
+/logs
+*.pyc
